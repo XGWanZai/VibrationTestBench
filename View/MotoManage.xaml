@@ -1,0 +1,228 @@
+﻿<Window x:Class="VibrationTestBench.View.MotoManage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VibrationTestBench.View" xmlns:viewmodel="clr-namespace:VibrationTestBench.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MotoViewManage}"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+         xmlns:pu="clr-namespace:Panuon.UI.Silver;assembly=Panuon.UI.Silver"
+           xmlns:local1="clr-namespace:VibrationTestBench.Dictionary"
+        mc:Ignorable="d" 
+             BorderThickness="0"
+        d:DesignHeight="768" d:DesignWidth="1024" >
+    <!--WindowState="Maximized" ResizeMode="NoResize" WindowStyle="None"-->
+    <Window.Resources>
+        <!--<ResourceDictionary Source="/VibrationTestBench;component/Dictionary/DataGridDictionary.xaml"/>-->
+        <ResourceDictionary>
+            <local1:RowToIndexConverter x:Key="rowToIndexConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Height="768" Width="1024" Background="{StaticResource AllBak}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label Content="被测产品型号与测试参数管理" Width="900" FontFamily="隶书" Foreground="White" HorizontalContentAlignment="Center" 
+            FontSize="35" Background="#6C90CA" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Grid.Row="1" Height="638">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Content="被编辑产品型号列表:"  FontSize="20" FontWeight="Black" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+
+            <Label Content="测试数据表:" Grid.Column="1"  FontSize="20" FontWeight="Black" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+
+            <Grid  Grid.Column="1" Width="200" HorizontalAlignment="Right">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button  BorderThickness="0" Grid.Column="0" Background="#E9E9E9"
+                HorizontalContentAlignment="Center" CommandParameter="9" Command="{Binding ButMotoCommand}" 
+		            VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="100">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Height="60" Width="40" Source="../Resources/新加号.png" />
+                        <TextBlock TextWrapping="Wrap" FontSize="20" Text="添加" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button BorderThickness="0"  Grid.Column="1" Background="#E9E9E9"
+                HorizontalContentAlignment="Center" CommandParameter="9" Command="{Binding ButMotoCommand}" 
+		            VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="100">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Height="60" Width="40" Source="../Resources/排序.png" />
+                        <TextBlock TextWrapping="Wrap" FontSize="20" Text="排序" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+            </Grid>
+          
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="450" />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ListBox Margin="8" Height="450" Width="250" SelectedItem="{Binding SelectMenultemCommand}" x:Name="listbox" ItemsSource="{Binding MotoModelManageModels, Mode=TwoWay}" HorizontalContentAlignment="Center"   HorizontalAlignment="Left"   VerticalAlignment="Top" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel  Orientation="Horizontal">
+                                <TextBlock  Text="{Binding testedProduct,Mode=TwoWay}" Margin="5"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Label Grid.Row="1" Content="当前被测产品型号:"  FontSize="20" FontWeight="Black" HorizontalAlignment="Center"  VerticalAlignment="Top"/>
+
+                <Label Grid.Row="1" Width="150" FontWeight="Black" Background="#9C9C9C" Height="30"  HorizontalContentAlignment="Center" Foreground="White" 
+		Content="{Binding CurrentlyTestedModel}" VerticalContentAlignment="Center"    VerticalAlignment="Bottom" />
+
+                <Label  Grid.Row="2"  Content="被编辑产品型号:"  FontSize="20" FontWeight="Black" HorizontalAlignment="Center"  VerticalAlignment="Top"/>
+
+                <TextBox   Grid.Row="2"   Width="150"  FontWeight="Black" Background="#9C9C9C" x:Name="beibianjicpText" Height="30" Foreground="White" Text="{Binding EditedProductName}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"    VerticalAlignment="Bottom" Margin="0,0,0,8">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="TextChanged">
+                            <prism:InvokeCommandAction Command="{Binding ButMotoCommand}"
+                                               CommandParameter="12" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="154*" />
+                    <ColumnDefinition Width="155*" />
+                    <ColumnDefinition Width="155*" />
+                    <ColumnDefinition Width="155*" />
+                    <ColumnDefinition Width="131*" />
+                    <ColumnDefinition Width="24*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="500"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <DataGrid
+                    Grid.ColumnSpan="6"
+                    x:Name="dgData"
+                  ItemsSource="{Binding MotoModelDetailsModels, Mode=TwoWay}"
+                  SelectedItem="{Binding SelectDataGridCommand}"
+                  SelectedIndex="{Binding DataGridIndex,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                    pu:DataGridHelper.HeaderMinHeight="60"
+                    pu:DataGridHelper.RowMinHeight="34"
+                  IsReadOnly="False"
+                  SelectionUnit="FullRow"
+                    pu:DataGridHelper.ColumnHorizontalContentAlignment="Center"
+                    pu:DataGridHelper.SelectedBackground="#44AFAFAF"
+                    pu:DataGridHelper.HoverBackground="#22AFAFAF"
+                    CanUserAddRows="False" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="CellEditEnding">
+                            <prism:InvokeCommandAction Command="{Binding ButMotoCommand}"
+                                               CommandParameter="11" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="序号"
+                                    Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={StaticResource rowToIndexConverter}}" />
+                        
+                        <!--<DataGridTemplateColumn x:Name="dateScheduledColumn"  
+                                                            Header="时间">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DatePicker 
+                                        SelectedDate="{Binding Path=time, Mode=TwoWay,
+                                          ValidatesOnExceptions=true, NotifyOnValidationError=true,UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
+                        
+                        <!--<DataGridTextColumn Header="时间" Binding="{Binding Path=time,StringFormat='yyyy-MM-dd'}" />-->
+                        <DataGridTextColumn Header="速度上线值" Binding="{Binding sudushangxianzhi}"  Width="130"/>
+                        <DataGridTextColumn Header="速度下限值" Binding="{Binding suduxiaxianzhi}" Width="130" />
+                        <DataGridTextColumn Header="加速度值上线" Binding="{Binding jiasuduzhishangxian}" Width="130" />
+                        <DataGridTextColumn Header="加速度值下线" Binding="{Binding jiasuduzhixiaxian}"  Width="130"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Button Grid.Row="1"  Margin="8"   Foreground="Black" FontWeight="Black" CommandParameter="5" Command="{Binding ButMotoCommand}"  FontSize="25">
+                    <WrapPanel Height="52" Width="140">
+                        <Image Height="60" Width="40"  Source="../Resources/保存.png" />
+                        <TextBlock TextWrapping="Wrap" FontSize="23" Text="参数保存" VerticalAlignment="Center"/>
+                    </WrapPanel>    
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#ECECEC" Offset="0.5"/>
+                            <GradientStop Color="#A4A4A4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+                <Button  Grid.Row="1"  Grid.Column="1"  Foreground="Black" FontWeight="Black" CommandParameter="6" Command="{Binding ButMotoCommand}"  FontSize="25" Margin="8">
+                    <WrapPanel Height="52" Width="140">
+                        <Image Height="60" Width="40"  Source="../Resources/新建.png" />
+                        <TextBlock TextWrapping="Wrap" FontSize="23" Text="新   建" VerticalAlignment="Center"/>
+                    </WrapPanel>
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#ECECEC" Offset="0.5"/>
+                            <GradientStop Color="#A4A4A4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+                <Button     Grid.Row="1"  Grid.Column="2"  Foreground="Black" FontWeight="Black" CommandParameter="10" Command="{Binding ButMotoCommand}"  FontSize="25" Margin="8">
+                    <WrapPanel Height="52" Width="140">
+                        <Image Height="60" Width="40"  Source="../Resources/删除.png" />
+                        <TextBlock TextWrapping="Wrap" FontSize="23" Text="删除型号" VerticalAlignment="Center"/>
+                    </WrapPanel>
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#ECECEC" Offset="0.5"/>
+                            <GradientStop Color="#A4A4A4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+                <Button     Grid.Row="1"  Grid.Column="3"  Foreground="Black" FontWeight="Black" CommandParameter="7" Command="{Binding ButMotoCommand}"  FontSize="25" Margin="8">
+                    <WrapPanel Height="52" Width="140">
+                        <Image Height="60" Width="40"    Source="../Resources/删除.png" />
+                        <TextBlock TextWrapping="Wrap" FontSize="23" Text="删除参数" VerticalAlignment="Center"/>
+                    </WrapPanel>
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#ECECEC" Offset="0.5"/>
+                            <GradientStop Color="#A4A4A4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+                <Button  Grid.Row="1"  Grid.Column="4"  Margin="8" CommandParameter="8"  FontWeight="Black" Command="{Binding ButMotoCommand}"  FontSize="25" Grid.ColumnSpan="2">
+                    <WrapPanel Height="52" Width="140" >
+                        <Image Height="60" Width="40" Margin="8" Source="../Resources/退出.png" />
+                        <TextBlock TextWrapping="Wrap" FontSize="23" Text="退  出" VerticalAlignment="Center"/>
+                    </WrapPanel>
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#ECECEC" Offset="0.5"/>
+                            <GradientStop Color="#A4A4A4" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
